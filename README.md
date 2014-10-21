@@ -12,7 +12,7 @@ Temporarily caches Chef data bag items in an attribute to speed up chef-client r
 ##Getting Started
 
 ###Installation
-Using Berkshelf: ```cookbook 'data-bag-cache', '~> 0.1.1'```
+Using Berkshelf: ```cookbook 'data-bag-cache', '~> 0.2.0'```
 
 ### Utilization
 To use this cookbook, first ensure that you have added ```depends "data-bag-cache"``` to your metadata.rb. Once your cookbook is dependent on data-bag-cache you can cache data bag items using the ```data_bag_cache_items``` LWRP. The resources available to the LWRP are listed below:
@@ -27,19 +27,19 @@ To access cached data bag items, simply reference the node attribute storing the
 ### Examples
 Get all items in the users data bag:
 ```ruby
-data_bag_cache_items "users"
+data_bag_cache "users"
 ```
 
 Get all items in the users data bag where the sysadmin group is present:
 ```ruby
-data_bag_cache_items "users" do
+data_bag_cache "users" do
     search "group:sysadmin"
 end
 ```
 
 Get all items in the users data bag where the shell is /bin/zsh:
 ```ruby
-data_bag_cache_items "zsh_users" do
+data_bag_cache "zsh_users" do
     data_bag "users"
     search "shell:/bin/zsh"
 end
@@ -47,9 +47,8 @@ end
 
 Get all items in the users data bag, ensuring it is the most up to date list (not serving a cached copy from earlier in the run):
 ```ruby
-data_bag_cache_items "users" do
+data_bag_cache "users" do
     cache_disabled true
-    action :nothing
 end
 ```
 
